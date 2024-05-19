@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  nats:
+    image: nats:latest
+    container_name: nats-container
+    ports:
+      - "4222:4222"  # NATS default port for client connections
+      - "8222:8222"  # NATS monitoring dashboard port (optional)
