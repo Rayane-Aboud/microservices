@@ -20,16 +20,17 @@ client = influxdb_client.InfluxDBClient(
 query_api = client.query_api()
 
 
-def query_builder(dataType="GAS",serialNumber="1"):
+def query_builder(dataType,serialNumber):
     query = '''
         from(bucket: "namla-smart-metering")
-        |> range(start: 0)
+        |> range(start: -1h)
         |> filter(fn: (r) => r["_measurement"] == "sensor_data")
     '''
     query +=    f'\t|> filter(fn: (r) => r["dataType"] == "{dataType}")\n'
     query +=    f'\t\t|> filter(fn: (r) => r["serialNumber"] == "{serialNumber}")\n'
     query +=    f'\t\t|> filter(fn: (r) => r["_field"] == "value")\n'
     query +=    '\t\t|> yield(name: "last")\n'
+    
     return query
 
 
@@ -207,10 +208,11 @@ from fastapi import Query
 
 
 @app.get('/{forecast_horizon}')
-def root(forecast_horizon: int):
+def root(forecast_horizon: int, datatype: str = Query(...), serialnumber: str = Query(...)):
+    print(f"Forecast Horizon: {forecast_horizon}, Datatype: {datatype}, Serialnumber: {serialnumber}")
     query_results = []
     
-    result = query_api.query(org=org, query=query_builder())
+    result = query_api.query(org=org, query=query_builder(dataType=datatype, serialNumber=serialnumber))
     for table in result:
         for record in table.records:
             query_results.append((record.get_field(), record.get_value()))
@@ -218,7 +220,8 @@ def root(forecast_horizon: int):
     #query_results = data_array
     
     # Convert numpy array to list of lists
-    return query_results
+    response_content = {"query_results": query_results}
+    return JSONResponse(content= response_content)
     """
     inferencer = Inference(query_results)
     model = LSTM(1, 4, 2, device='cpu')
