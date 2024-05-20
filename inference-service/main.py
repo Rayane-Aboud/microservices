@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 import influxdb_client
+import time
+from influxdb_client.client.write_api import SYNCHRONOUS
 
 app = FastAPI()
 
@@ -19,6 +21,7 @@ client = influxdb_client.InfluxDBClient(
 # 
 query_api = client.query_api()
 
+write_api = client.write_api(write_options=SYNCHRONOUS)
 
 def query_builder(dataType,serialNumber):
     query = '''
@@ -221,8 +224,8 @@ def root(forecast_horizon: int, datatype: str = Query(...), serialnumber: str = 
     
     # Convert numpy array to list of lists
     response_content = {"query_results": query_results}
-    return JSONResponse(content= response_content)
-    """
+    #return JSONResponse(content= response_content)
+    
     inferencer = Inference(query_results)
     model = LSTM(1, 4, 2, device='cpu')
     model.load_state_dict(torch.load("./Prediction_models/trained_model.pth"))
@@ -251,10 +254,20 @@ def root(forecast_horizon: int, datatype: str = Query(...), serialnumber: str = 
         "metrics": metrics
     }
 
-
-
+    
+    for p in response_content["predictions"]:
+        point = influxdb_client.Point('sensor_data') \
+        .tag('serialNumber', serialnumber + "pred") \
+        .tag('dateType', 'DATE') \
+        .tag('dataType', datatype) \
+        .tag('dataUnit', 'METER') \
+        .field('value', float(p[0])) \
+        .time(time.time_ns()+100000)  
+        write_api.write(bucket='namla-smart-metering',org='Namla',record=point)
+    
+    
     return JSONResponse(content=response_content)
-    """
+    
     
 
 
@@ -285,7 +298,6 @@ async def receive_model(silem: UploadFile = File(...)):
 
 
 import schedule
-import time
 
 # Function to execute the code block every 24 hours
 def execute_code_block():
