@@ -130,7 +130,7 @@ services:
       context: ./data-aquisition-service
     container_name: data-aquisition-service
     ports:
-      - "3002:3002"
+      - "3010:3002"
     restart: on-failure
     depends_on:
       - kafka1

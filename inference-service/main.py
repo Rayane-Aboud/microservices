@@ -20,7 +20,7 @@ client = influxdb_client.InfluxDBClient(
 query_api = client.query_api()
 
 
-def query_builder(dataType="WATER",serialNumber="1"):
+def query_builder(dataType="GAS",serialNumber="1"):
     query = '''
         from(bucket: "namla-smart-metering")
         |> range(start: 0)
@@ -31,6 +31,7 @@ def query_builder(dataType="WATER",serialNumber="1"):
     query +=    f'\t\t|> filter(fn: (r) => r["_field"] == "value")\n'
     query +=    '\t\t|> yield(name: "last")\n'
     return query
+
 
 
 import numpy as np
@@ -203,18 +204,22 @@ from data import data_array
 
 from fastapi import Query
 
+
+
 @app.get('/{forecast_horizon}')
 def root(forecast_horizon: int):
     query_results = []
-    """
+    
     result = query_api.query(org=org, query=query_builder())
     for table in result:
         for record in table.records:
             query_results.append((record.get_field(), record.get_value()))
-    """
-    query_results = data_array
+    
+    #query_results = data_array
     
     # Convert numpy array to list of lists
+    return query_results
+    """
     inferencer = Inference(query_results)
     model = LSTM(1, 4, 2, device='cpu')
     model.load_state_dict(torch.load("./Prediction_models/trained_model.pth"))
@@ -246,7 +251,8 @@ def root(forecast_horizon: int):
 
 
     return JSONResponse(content=response_content)
-
+    """
+    
 
 
 from fastapi import File, UploadFile
