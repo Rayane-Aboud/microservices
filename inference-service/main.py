@@ -228,24 +228,33 @@ def root(forecast_horizon: int, datatype: str = Query(...), serialnumber: str = 
     
     inferencer = Inference(query_results)
     model = LSTM(1, 4, 2, device='cpu')
-    model.load_state_dict(torch.load("./Prediction_models/trained_model.pth"))
+    model.load_state_dict(torch.load("./Prediction_models/trained_model_{datatype}.pth"))
 
     #load the model to the inferencer
     inferencer.load_model(model=model)
-
-
     index = None
     fh = None
-    if forecast_horizon  <= 8:
-        index = 0
-        fh=8
-    elif forecast_horizon<=96:
-        index = 1
-        fh=96
+    if (datatype=="GAS"):
+        if forecast_horizon  <= 2:
+            index = 0
+            fh=2
+        elif forecast_horizon<=24:
+            index = 1
+            fh=24
+        else:
+            index = 2
+            fh=7*24
     else:
-        index = 2
-        fh=7*24*4
-
+        if forecast_horizon  <= 8:
+            index = 0
+            fh=8
+        elif forecast_horizon<=96:
+            index = 1
+            fh=96
+        else:
+            index = 2
+            fh=7*24*4
+    
     predictions, metrics = inferencer.perform_inference(index, fh)
     
     
@@ -262,7 +271,7 @@ def root(forecast_horizon: int, datatype: str = Query(...), serialnumber: str = 
         .tag('dataType', datatype) \
         .tag('dataUnit', 'METER') \
         .field('value', float(p[0])) \
-        .time(time.time_ns()+100000)  
+        .time(time.time_ns()+3600000000000)  
         write_api.write(bucket='namla-smart-metering',org='Namla',record=point)
     
     
