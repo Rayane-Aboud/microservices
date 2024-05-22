@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/bfd2ab7870a942f3a7dc1076f39f7cde/artifacts
+end_time: 1716415070173
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: bfd2ab7870a942f3a7dc1076f39f7cde
+run_name: rebellious-rook-984
+run_uuid: bfd2ab7870a942f3a7dc1076f39f7cde
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415067022
+status: 3
+tags: []
+user_id: rayane-aboud

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/8f6fae1950334109bece4bf0b47a4796/artifacts
+end_time: 1716415267172
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 8f6fae1950334109bece4bf0b47a4796
+run_name: receptive-ox-302
+run_uuid: 8f6fae1950334109bece4bf0b47a4796
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415263633
+status: 3
+tags: []
+user_id: rayane-aboud

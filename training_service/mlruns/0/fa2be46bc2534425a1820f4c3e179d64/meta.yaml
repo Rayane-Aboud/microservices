@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/fa2be46bc2534425a1820f4c3e179d64/artifacts
+end_time: 1716415080441
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: fa2be46bc2534425a1820f4c3e179d64
+run_name: industrious-fawn-888
+run_uuid: fa2be46bc2534425a1820f4c3e179d64
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415077175
+status: 3
+tags: []
+user_id: rayane-aboud

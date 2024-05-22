@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/b90e4d7f6e6b4b83bd5ee3cea4b6c080/artifacts
+end_time: 1716415168157
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: b90e4d7f6e6b4b83bd5ee3cea4b6c080
+run_name: able-cod-705
+run_uuid: b90e4d7f6e6b4b83bd5ee3cea4b6c080
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415164590
+status: 3
+tags: []
+user_id: rayane-aboud

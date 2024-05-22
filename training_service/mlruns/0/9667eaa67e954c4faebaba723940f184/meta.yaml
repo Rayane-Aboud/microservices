@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/9667eaa67e954c4faebaba723940f184/artifacts
+end_time: 1716415184723
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 9667eaa67e954c4faebaba723940f184
+run_name: industrious-seal-731
+run_uuid: 9667eaa67e954c4faebaba723940f184
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415181462
+status: 3
+tags: []
+user_id: rayane-aboud

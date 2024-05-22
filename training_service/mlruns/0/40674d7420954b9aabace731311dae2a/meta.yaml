@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/40674d7420954b9aabace731311dae2a/artifacts
+end_time: 1716415143500
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 40674d7420954b9aabace731311dae2a
+run_name: burly-steed-787
+run_uuid: 40674d7420954b9aabace731311dae2a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415140369
+status: 3
+tags: []
+user_id: rayane-aboud

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/597ed23670164792a638dffa0bdf2ef1/artifacts
+end_time: 1716415204667
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 597ed23670164792a638dffa0bdf2ef1
+run_name: magnificent-moth-2
+run_uuid: 597ed23670164792a638dffa0bdf2ef1
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415201254
+status: 3
+tags: []
+user_id: rayane-aboud

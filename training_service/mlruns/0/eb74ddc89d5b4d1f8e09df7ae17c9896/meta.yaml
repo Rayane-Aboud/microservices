@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/eb74ddc89d5b4d1f8e09df7ae17c9896/artifacts
+end_time: 1716415103552
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: eb74ddc89d5b4d1f8e09df7ae17c9896
+run_name: rebellious-trout-113
+run_uuid: eb74ddc89d5b4d1f8e09df7ae17c9896
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415100351
+status: 3
+tags: []
+user_id: rayane-aboud

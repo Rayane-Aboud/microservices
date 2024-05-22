@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/b5e6c21be06f4d3e92ab3ab48af1aa50/artifacts
+end_time: 1716415057058
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: b5e6c21be06f4d3e92ab3ab48af1aa50
+run_name: luxuriant-lark-500
+run_uuid: b5e6c21be06f4d3e92ab3ab48af1aa50
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415053660
+status: 3
+tags: []
+user_id: rayane-aboud

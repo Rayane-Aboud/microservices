@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/91c28a72c36e4fa387c8940285266893/artifacts
+end_time: 1716415270836
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 91c28a72c36e4fa387c8940285266893
+run_name: efficient-fowl-169
+run_uuid: 91c28a72c36e4fa387c8940285266893
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415267175
+status: 3
+tags: []
+user_id: rayane-aboud

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/17163793555948109e9b4eb5229ad05e/artifacts
+end_time: 1716415160505
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 17163793555948109e9b4eb5229ad05e
+run_name: redolent-fox-731
+run_uuid: 17163793555948109e9b4eb5229ad05e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415156740
+status: 3
+tags: []
+user_id: rayane-aboud

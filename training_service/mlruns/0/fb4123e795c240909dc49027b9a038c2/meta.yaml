@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/fb4123e795c240909dc49027b9a038c2/artifacts
+end_time: 1716415171579
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: fb4123e795c240909dc49027b9a038c2
+run_name: clumsy-loon-182
+run_uuid: fb4123e795c240909dc49027b9a038c2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415168161
+status: 3
+tags: []
+user_id: rayane-aboud

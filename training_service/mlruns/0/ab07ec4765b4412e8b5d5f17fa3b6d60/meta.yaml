@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/ab07ec4765b4412e8b5d5f17fa3b6d60/artifacts
+end_time: 1716415040474
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: ab07ec4765b4412e8b5d5f17fa3b6d60
+run_name: bustling-skunk-946
+run_uuid: ab07ec4765b4412e8b5d5f17fa3b6d60
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415036829
+status: 3
+tags: []
+user_id: rayane-aboud

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/292af03853a8487e9dc831829047c77b/artifacts
+end_time: 1716415156738
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 292af03853a8487e9dc831829047c77b
+run_name: bright-fowl-374
+run_uuid: 292af03853a8487e9dc831829047c77b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415153721
+status: 3
+tags: []
+user_id: rayane-aboud

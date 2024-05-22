@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/a5904811165546bab90f4be18ea9996d/artifacts
+end_time: 1716415260111
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: a5904811165546bab90f4be18ea9996d
+run_name: redolent-cub-111
+run_uuid: a5904811165546bab90f4be18ea9996d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415256455
+status: 3
+tags: []
+user_id: rayane-aboud

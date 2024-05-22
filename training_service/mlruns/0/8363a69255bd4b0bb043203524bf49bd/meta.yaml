@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/8363a69255bd4b0bb043203524bf49bd/artifacts
+end_time: 1716415033141
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 8363a69255bd4b0bb043203524bf49bd
+run_name: gaudy-auk-790
+run_uuid: 8363a69255bd4b0bb043203524bf49bd
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415029399
+status: 3
+tags: []
+user_id: rayane-aboud

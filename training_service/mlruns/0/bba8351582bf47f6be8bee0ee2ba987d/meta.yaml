@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/bba8351582bf47f6be8bee0ee2ba987d/artifacts
+end_time: 1716415194443
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: bba8351582bf47f6be8bee0ee2ba987d
+run_name: bald-carp-281
+run_uuid: bba8351582bf47f6be8bee0ee2ba987d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415191166
+status: 3
+tags: []
+user_id: rayane-aboud

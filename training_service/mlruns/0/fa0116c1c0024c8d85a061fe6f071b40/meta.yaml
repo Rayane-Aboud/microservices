@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/fa0116c1c0024c8d85a061fe6f071b40/artifacts
+end_time: 1716415116841
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: fa0116c1c0024c8d85a061fe6f071b40
+run_name: funny-hound-358
+run_uuid: fa0116c1c0024c8d85a061fe6f071b40
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415113582
+status: 3
+tags: []
+user_id: rayane-aboud

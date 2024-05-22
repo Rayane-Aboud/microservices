@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/87b314205bb3443d862f769379ac86ba/artifacts
+end_time: 1716415133806
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 87b314205bb3443d862f769379ac86ba
+run_name: rebellious-ram-543
+run_uuid: 87b314205bb3443d862f769379ac86ba
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415130552
+status: 3
+tags: []
+user_id: rayane-aboud

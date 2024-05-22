@@ -1,0 +1,21 @@
+artifact_path: model_lookback_168_epoch_7
+flavors:
+  python_function:
+    config:
+      device: null
+    data: data
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.pytorch
+    pickle_module_name: mlflow.pytorch.pickle_module
+    python_version: 3.10.12
+  pytorch:
+    code: null
+    model_data: data
+    pytorch_version: 2.3.0+cu121
+mlflow_version: 2.13.0
+model_size_bytes: 5648
+model_uuid: a0b4c10b5d8c407ba5608c462bfb8d67
+run_id: 1a0d5be418be42f7bd2a53db91f12c76
+utc_time_created: '2024-05-22 22:00:18.590265'

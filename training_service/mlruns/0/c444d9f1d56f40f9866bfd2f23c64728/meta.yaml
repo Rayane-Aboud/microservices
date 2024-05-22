@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/c444d9f1d56f40f9866bfd2f23c64728/artifacts
+end_time: 1716415242433
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: c444d9f1d56f40f9866bfd2f23c64728
+run_name: persistent-grub-215
+run_uuid: c444d9f1d56f40f9866bfd2f23c64728
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415239022
+status: 3
+tags: []
+user_id: rayane-aboud

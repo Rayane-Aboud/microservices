@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/7455c31f4ac748a8928d066757a2e259/artifacts
+end_time: 1716415137117
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 7455c31f4ac748a8928d066757a2e259
+run_name: skittish-fowl-200
+run_uuid: 7455c31f4ac748a8928d066757a2e259
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415133809
+status: 3
+tags: []
+user_id: rayane-aboud

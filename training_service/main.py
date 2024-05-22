@@ -2,11 +2,13 @@ import pandas as pd
 from fastapi import FastAPI, Query
 from pymongo import MongoClient
 from typing import List
+import mlflow
+import mlflow.pytorch
+
 
 app = FastAPI()
 
 import pandas as pd
-import matplotlib.pyplot as plt
 from copy import deepcopy as dc
 from sklearn.preprocessing import MinMaxScaler
 import torch
@@ -14,8 +16,7 @@ import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 import numpy as np
 import os
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-import statsmodels.api as sm
+from sklearn.metrics import mean_squared_error, mean_absolute_error#, r2_score
 from prophet import Prophet
 import torch.nn.functional as F
 
@@ -41,7 +42,6 @@ class UniconPytorch:
         self.predictions = {}
         self.num_epochs = num_epochs
         self.model = None
-        self.arima_model = None
         self.prophet_model = None
         self.scaler = MinMaxScaler(feature_range=(0, 1))
         self.rnn_model = None
@@ -71,18 +71,18 @@ class UniconPytorch:
 
     def prepare_dataframe(self):
         df = dc(self.data_frame)
-        df['timestamp'] = pd.to_datetime(df['timestamp'])
-        df.sort_values(by=['timestamp'], inplace=True)  # Sort DataFrame by timestamp and campus_id
-        df.set_index(['timestamp'], inplace=True)
+        #df['timestamp'] = pd.to_datetime(df['timestamp'])
+        #df.sort_values(by=['timestamp'], inplace=True)  # Sort DataFrame by timestamp and campus_id
+        #df.set_index(['timestamp'], inplace=True)
 
         # Ensure that only the 'consumption' column is selected for preparing the dataframe
-        relevant_columns = ['consumption']  # Add any other relevant columns here
+        relevant_columns = ['value']  # Add any other relevant columns here
         df = df[relevant_columns]
 
 
-        shifted_columns = [df['consumption'].shift(self.lookback + 1 - i) for i in range(1, self.lookback + 1)]
+        shifted_columns = [df['value'].shift(self.lookback + 1 - i) for i in range(1, self.lookback + 1)]
         df_shifted = pd.concat(shifted_columns, axis=1)
-        df_shifted.columns = [f'consumption(t-{self.lookback+1 - i})' for i in range(1, self.lookback + 1)]
+        df_shifted.columns = [f'value(t-{self.lookback+1 - i})' for i in range(1, self.lookback + 1)]
         df = pd.concat([df, df_shifted], axis=1)
 
         df.dropna(inplace=True)
@@ -94,13 +94,7 @@ class UniconPytorch:
         self.min = self.scaler.data_min_[0]
         self.max = self.scaler.data_max_[0]
         #self.preprocessed_dataframe= self.scaler.inverse_transform(self.preprocessed_dataframe)
-        plt.figure(figsize=(10, 6))
-        plt.plot(self.preprocessed_dataframe)
-        plt.title('Preprocessed Dataset')
-        plt.xlabel('Index')
-        plt.ylabel('Value')
-        plt.grid(True)
-        plt.show()
+        
     def create_X_y(self):
         self.X = self.preprocessed_dataframe[:, 1:]
         self.y = self.preprocessed_dataframe[:, 0]
@@ -232,6 +226,7 @@ class UniconPytorch:
       self.create_model()
       optimizer = torch.optim.Adam(self.model.parameters(), lr=0.01)
 
+      mlflow.set_tracking_uri("http://localhost:5000")
 
 
       for lookback_value in self.lookback_values:
@@ -245,24 +240,35 @@ class UniconPytorch:
           self.create_dataloaders()
 
           for epoch in range(self.num_epochs):
-              self.train_one_epoch(self.model, loss_function, optimizer, epoch)
-              self.validate_one_epoch(self.model, loss_function)
-              # Calculate metrics on training set
-              train_predictions = self.model(self.X_train).detach().numpy().flatten()
-              train_mse = mean_squared_error(self.y_train, train_predictions)
-              train_mae = mean_absolute_error(self.y_train, train_predictions)
-              train_r2 = r2_score(self.y_train, train_predictions)
+            with mlflow.start_run():
+                mlflow.log_param("lookback", lookback_value)
+                mlflow.log_param("forecasting_horizon", lookback_value)
 
-              # Calculate metrics on test set
-              test_predictions = self.model(self.X_test).detach().numpy().flatten()
-              test_mse = mean_squared_error(self.y_test, test_predictions)
-              test_mae = mean_absolute_error(self.y_test, test_predictions)
-              test_r2 = r2_score(self.y_test, test_predictions)
+                self.train_one_epoch(self.model, loss_function, optimizer, epoch)
+                self.validate_one_epoch(self.model, loss_function)
+                # Calculate metrics on training set
+                train_predictions = self.model(self.X_train).detach().numpy().flatten()
+                train_mse = mean_squared_error(self.y_train, train_predictions)
+                train_mae = mean_absolute_error(self.y_train, train_predictions)
+                
+                #train_r2 = r2_score(self.y_train, train_predictions)
+                
+                # Calculate metrics on test set
+                test_predictions = self.model(self.X_test).detach().numpy().flatten()
+                test_mse = mean_squared_error(self.y_test, test_predictions)
+                test_mae = mean_absolute_error(self.y_test, test_predictions)
+                #test_r2 = r2_score(self.y_test, test_predictions)
 
-              print(f'Epoch {epoch + 1}/{self.num_epochs} - Lookback: {lookback_value}')
-              print(f'Train MSE: {train_mse:.4f}, Train MAE: {train_mae:.4f}, Train R-squared: {train_r2:.4f}')
-              print(f'Test MSE: {test_mse:.4f}, Test MAE: {test_mae:.4f}, Test R-squared: {test_r2:.4f}')
-              print()
+                print(f'Epoch {epoch + 1}/{self.num_epochs} - Lookback: {lookback_value}')
+                #print(f'Train MSE: {train_mse:.4f}, Train MAE: {train_mae:.4f}, Train R-squared: {train_r2:.4f}')
+                #print(f'Test MSE: {test_mse:.4f}, Test MAE: {test_mae:.4f}, Test R-squared: {test_r2:.4f}')
+                print()
+                mlflow.log_metric("train_mse", train_mse)
+                mlflow.log_metric("train_mae", train_mae)
+                mlflow.log_metric("test_mse", test_mse)
+                mlflow.log_metric("test_mae", test_mae)
+                mlflow.pytorch.log_model(self.model, f"model_lookback_{lookback_value}_epoch_{epoch}")
+
     def predict(self, forecasting_horizon):
         if not self.model:
             print("Model has not been trained yet. Please train the model before making predictions.")
@@ -297,11 +303,12 @@ class UniconPytorch:
         actual_values = self.y[-forecasting_horizon:]
         mse = mean_squared_error(actual_values, scaled_predictions)
         mae = mean_absolute_error(actual_values, scaled_predictions)
-        r2 = r2_score(actual_values, scaled_predictions)
+        
+        #r2 = r2_score(actual_values, scaled_predictions)
 
         metrics['MSE'] = mse
         metrics['MAE'] = mae
-        metrics['R2'] = r2
+        #metrics['R2'] = r2
 
 
         return predictions, metrics
@@ -317,7 +324,7 @@ class UniconPytorch:
 
         # Prepare DataFrame for Prophet
         df_prophet = dc(self.data_frame)
-        df_prophet.rename(columns={"timestamp": "ds", "consumption": "y"}, inplace=True)
+        df_prophet.rename(columns={"timestamp": "ds", "value": "y"}, inplace=True)
 
         # Fit the Prophet model
         self.prophet_model.fit(df_prophet)
@@ -338,14 +345,14 @@ class UniconPytorch:
         predictions[forecasting_horizon] = forecast['yhat'][-forecasting_horizon:].values
 
         # Calculate metrics
-        actual_values = self.data_frame['consumption'][-forecasting_horizon:].values
+        actual_values = self.data_frame['value'][-forecasting_horizon:].values
         mse = mean_squared_error(actual_values, predictions[forecasting_horizon])
         mae = mean_absolute_error(actual_values, predictions[forecasting_horizon])
-        r2 = r2_score(actual_values, predictions[forecasting_horizon])
+        #r2 = r2_score(actual_values, predictions[forecasting_horizon])
 
         metrics['MSE'] = mse
         metrics['MAE'] = mae
-        metrics['R2'] = r2
+        #metrics['R2'] = r2
 
         return predictions, metrics
 
@@ -399,17 +406,17 @@ class UniconPytorch:
               train_predictions = self.rnn_model(self.X_train).detach().numpy().flatten()
               train_mse = mean_squared_error(self.y_train, train_predictions)
               train_mae = mean_absolute_error(self.y_train, train_predictions)
-              train_r2 = r2_score(self.y_train, train_predictions)
+              #train_r2 = r2_score(self.y_train, train_predictions)
 
               # Calculate metrics on test set
               test_predictions = self.rnn_model(self.X_test).detach().numpy().flatten()
               test_mse = mean_squared_error(self.y_test, test_predictions)
               test_mae = mean_absolute_error(self.y_test, test_predictions)
-              test_r2 = r2_score(self.y_test, test_predictions)
+              #test_r2 = r2_score(self.y_test, test_predictions)
 
               print(f'Epoch {epoch + 1}/{self.num_epochs} - Lookback: {lookback_value}')
-              print(f'Train MSE: {train_mse:.4f}, Train MAE: {train_mae:.4f}, Train R-squared: {train_r2:.4f}')
-              print(f'Test MSE: {test_mse:.4f}, Test MAE: {test_mae:.4f}, Test R-squared: {test_r2:.4f}')
+              #print(f'Train MSE: {train_mse:.4f}, Train MAE: {train_mae:.4f}, Train R-squared: {train_r2:.4f}')
+              #print(f'Test MSE: {test_mse:.4f}, Test MAE: {test_mae:.4f}, Test R-squared: {test_r2:.4f}')
               print()
 
     def predict_rnn(self, forecasting_horizon):
@@ -445,11 +452,11 @@ class UniconPytorch:
         actual_values = self.y[-forecasting_horizon:]
         mse = mean_squared_error(actual_values, scaled_predictions)
         mae = mean_absolute_error(actual_values, scaled_predictions)
-        r2 = r2_score(actual_values, scaled_predictions)
+        #r2 = r2_score(actual_values, scaled_predictions)
 
         metrics['MSE'] = mse
         metrics['MAE'] = mae
-        metrics['R2'] = r2
+        #metrics['R2'] = r2
 
         return predictions, metrics
 
@@ -465,9 +472,10 @@ class UniconPytorch:
     def load_from_mongo(self, uri: str, database: str, collection: str, source: str):
         client = MongoClient(uri)
         db = client[database]
-        cursor = db[collection].find({"datatype": source})
+        cursor = db[collection].find({"dataType": source})
         df = pd.DataFrame(list(cursor))
         self.data_frame = df
+        
 
 
 # Example usage:
@@ -475,32 +483,51 @@ class UniconPytorch:
 source1=""
 model = UniconPytorch(train_test_split_percentage=0.8, batch_size=128)
 @app.get("/load_from_mongo/")
-async def load_from_mongo_handler(source: str = Query(..., description="Source to filter data from MongoDB")):
+async def load_from_mongo_handler(source: str = Query(...)):
+    from fastapi.responses import JSONResponse
     model.load_from_mongo("mongodb+srv://username:too_weak@cluster0.vtie42d.mongodb.net/", "test", "datas", source=source)
     source1=source
-    
-    model.train_model_horizons()
+    #print(source1)
+    #return JSONResponse({"source": f"{source1}"})
 
+    model.train_model_horizons()
+    
+    
     predictions, metrics = model.predict(model.forecasting_horizon_values[0])
     prediction, metric = model.predict(model.forecasting_horizon_values[1])
     pred, metr = model.predict(model.forecasting_horizon_values[2])
     model.save_model("./Prediction_models",source=source1)
-
+    
+    
     import requests 
 
-    url = "http://localhost:8000/inference-service/recieve-model"
-
+    url = "http://localhost:8000/receive-model"
+    
+    
     # Define the filepath of the saved model
     filename = f"trained_model_{source1}.pth"
-    filepath = os.path.join("./model_files", filename)
+    filepath = os.path.join("./Prediction_models", filename)
 
     # Open the model file
     with open(filepath, "rb") as file:
         # Send a POST request to the specified URL with the model file
-        response = requests.post(url, files={"model_file": file})
+        print(file)
+        response = requests.post(url, files={"silem": file})
 
     # Check the response
     if response.status_code == 200:
         print("Model sent successfully to inference service.")
     else:
         print("Failed to send model to inference service.")
+    
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    # Define the host and port for the FastAPI application to listen on
+    host = "0.0.0.0"  # Listen on all network interfaces
+    port = 8001  # Choose any available port you prefer
+
+    # Start the FastAPI application using Uvicorn ASGI server
+    uvicorn.run(app, host=host, port=port)

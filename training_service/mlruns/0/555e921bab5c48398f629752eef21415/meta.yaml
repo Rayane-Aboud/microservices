@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/555e921bab5c48398f629752eef21415/artifacts
+end_time: 1716415232071
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 555e921bab5c48398f629752eef21415
+run_name: bedecked-bee-658
+run_uuid: 555e921bab5c48398f629752eef21415
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415228628
+status: 3
+tags: []
+user_id: rayane-aboud

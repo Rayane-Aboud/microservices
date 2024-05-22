@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/4235d046c61c4b4782dd1516dcb9835e/artifacts
+end_time: 1716415281914
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 4235d046c61c4b4782dd1516dcb9835e
+run_name: legendary-pug-345
+run_uuid: 4235d046c61c4b4782dd1516dcb9835e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415278147
+status: 3
+tags: []
+user_id: rayane-aboud

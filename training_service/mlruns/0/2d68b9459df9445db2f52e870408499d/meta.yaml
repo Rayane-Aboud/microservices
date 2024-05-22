@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/2d68b9459df9445db2f52e870408499d/artifacts
+end_time: 1716415073575
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 2d68b9459df9445db2f52e870408499d
+run_name: colorful-stoat-596
+run_uuid: 2d68b9459df9445db2f52e870408499d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415070176
+status: 3
+tags: []
+user_id: rayane-aboud

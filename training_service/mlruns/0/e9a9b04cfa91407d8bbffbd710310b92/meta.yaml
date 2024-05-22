@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/e9a9b04cfa91407d8bbffbd710310b92/artifacts
+end_time: 1716415036825
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: e9a9b04cfa91407d8bbffbd710310b92
+run_name: silent-ant-880
+run_uuid: e9a9b04cfa91407d8bbffbd710310b92
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415033144
+status: 3
+tags: []
+user_id: rayane-aboud

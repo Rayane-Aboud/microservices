@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/cf90bb776ff8487b9acc8d3666d21142/artifacts
+end_time: 1716415100347
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: cf90bb776ff8487b9acc8d3666d21142
+run_name: persistent-worm-840
+run_uuid: cf90bb776ff8487b9acc8d3666d21142
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415096923
+status: 3
+tags: []
+user_id: rayane-aboud

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/1564fb897ba04e608d0a170706c3227e/artifacts
+end_time: 1716415029396
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 1564fb897ba04e608d0a170706c3227e
+run_name: sassy-smelt-52
+run_uuid: 1564fb897ba04e608d0a170706c3227e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415024473
+status: 3
+tags: []
+user_id: rayane-aboud

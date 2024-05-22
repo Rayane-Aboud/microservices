@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/8e4c5607e47d4691b37879c6dea3fa8d/artifacts
+end_time: 1716415239019
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 8e4c5607e47d4691b37879c6dea3fa8d
+run_name: magnificent-stag-724
+run_uuid: 8e4c5607e47d4691b37879c6dea3fa8d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415235564
+status: 3
+tags: []
+user_id: rayane-aboud

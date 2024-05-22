@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/829ea459890e4042bf22f5eaec7b125a/artifacts
+end_time: 1716415191164
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 829ea459890e4042bf22f5eaec7b125a
+run_name: unique-horse-736
+run_uuid: 829ea459890e4042bf22f5eaec7b125a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415187992
+status: 3
+tags: []
+user_id: rayane-aboud

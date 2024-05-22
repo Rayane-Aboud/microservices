@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/7cab645ba4cb4db4b87c3acc4e445aac/artifacts
+end_time: 1716415067020
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 7cab645ba4cb4db4b87c3acc4e445aac
+run_name: treasured-turtle-123
+run_uuid: 7cab645ba4cb4db4b87c3acc4e445aac
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415063758
+status: 3
+tags: []
+user_id: rayane-aboud

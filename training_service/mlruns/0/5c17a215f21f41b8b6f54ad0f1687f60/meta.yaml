@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/5c17a215f21f41b8b6f54ad0f1687f60/artifacts
+end_time: 1716415150523
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 5c17a215f21f41b8b6f54ad0f1687f60
+run_name: popular-goose-972
+run_uuid: 5c17a215f21f41b8b6f54ad0f1687f60
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415147181
+status: 3
+tags: []
+user_id: rayane-aboud

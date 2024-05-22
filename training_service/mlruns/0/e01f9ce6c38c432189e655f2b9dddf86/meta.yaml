@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/e01f9ce6c38c432189e655f2b9dddf86/artifacts
+end_time: 1716415178210
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: e01f9ce6c38c432189e655f2b9dddf86
+run_name: welcoming-croc-675
+run_uuid: e01f9ce6c38c432189e655f2b9dddf86
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415174910
+status: 3
+tags: []
+user_id: rayane-aboud

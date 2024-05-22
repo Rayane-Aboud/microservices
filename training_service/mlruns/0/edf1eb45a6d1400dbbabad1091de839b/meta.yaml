@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/edf1eb45a6d1400dbbabad1091de839b/artifacts
+end_time: 1716415164587
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: edf1eb45a6d1400dbbabad1091de839b
+run_name: righteous-whale-74
+run_uuid: edf1eb45a6d1400dbbabad1091de839b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415160507
+status: 3
+tags: []
+user_id: rayane-aboud

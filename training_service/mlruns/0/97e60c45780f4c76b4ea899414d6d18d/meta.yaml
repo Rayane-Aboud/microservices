@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/97e60c45780f4c76b4ea899414d6d18d/artifacts
+end_time: 1716415274572
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 97e60c45780f4c76b4ea899414d6d18d
+run_name: dashing-shoat-737
+run_uuid: 97e60c45780f4c76b4ea899414d6d18d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415270839
+status: 3
+tags: []
+user_id: rayane-aboud

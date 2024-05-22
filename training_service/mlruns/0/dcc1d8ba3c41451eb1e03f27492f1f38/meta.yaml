@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/dcc1d8ba3c41451eb1e03f27492f1f38/artifacts
+end_time: 1716415249327
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: dcc1d8ba3c41451eb1e03f27492f1f38
+run_name: languid-duck-82
+run_uuid: dcc1d8ba3c41451eb1e03f27492f1f38
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415245877
+status: 3
+tags: []
+user_id: rayane-aboud

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/9f3a0b6b58844ee4bcd1f98ec8a921bb/artifacts
+end_time: 1716415208077
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 9f3a0b6b58844ee4bcd1f98ec8a921bb
+run_name: blushing-sponge-228
+run_uuid: 9f3a0b6b58844ee4bcd1f98ec8a921bb
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415204670
+status: 3
+tags: []
+user_id: rayane-aboud

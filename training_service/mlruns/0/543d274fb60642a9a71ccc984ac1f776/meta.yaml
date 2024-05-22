@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/543d274fb60642a9a71ccc984ac1f776/artifacts
+end_time: 1716415060289
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 543d274fb60642a9a71ccc984ac1f776
+run_name: upset-croc-579
+run_uuid: 543d274fb60642a9a71ccc984ac1f776
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415057060
+status: 3
+tags: []
+user_id: rayane-aboud

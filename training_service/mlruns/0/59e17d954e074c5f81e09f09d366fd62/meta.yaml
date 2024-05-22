@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/59e17d954e074c5f81e09f09d366fd62/artifacts
+end_time: 1716415043572
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 59e17d954e074c5f81e09f09d366fd62
+run_name: clean-roo-511
+run_uuid: 59e17d954e074c5f81e09f09d366fd62
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415040477
+status: 3
+tags: []
+user_id: rayane-aboud

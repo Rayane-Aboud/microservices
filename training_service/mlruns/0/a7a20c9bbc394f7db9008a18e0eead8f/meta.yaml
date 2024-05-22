@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/a7a20c9bbc394f7db9008a18e0eead8f/artifacts
+end_time: 1716415256452
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: a7a20c9bbc394f7db9008a18e0eead8f
+run_name: omniscient-snail-927
+run_uuid: a7a20c9bbc394f7db9008a18e0eead8f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415252851
+status: 3
+tags: []
+user_id: rayane-aboud

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/13f2a1a793014d15b66c1472d26979a4/artifacts
+end_time: 1716415235561
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 13f2a1a793014d15b66c1472d26979a4
+run_name: useful-roo-720
+run_uuid: 13f2a1a793014d15b66c1472d26979a4
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415232074
+status: 3
+tags: []
+user_id: rayane-aboud

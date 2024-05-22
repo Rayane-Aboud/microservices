@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/66039872cb0344868633b2dfb3caffda/artifacts
+end_time: 1716415119975
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 66039872cb0344868633b2dfb3caffda
+run_name: stylish-kite-784
+run_uuid: 66039872cb0344868633b2dfb3caffda
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415116844
+status: 3
+tags: []
+user_id: rayane-aboud

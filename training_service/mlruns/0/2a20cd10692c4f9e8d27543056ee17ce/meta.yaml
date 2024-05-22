@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/2a20cd10692c4f9e8d27543056ee17ce/artifacts
+end_time: 1716415147176
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 2a20cd10692c4f9e8d27543056ee17ce
+run_name: fun-mouse-208
+run_uuid: 2a20cd10692c4f9e8d27543056ee17ce
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415143503
+status: 3
+tags: []
+user_id: rayane-aboud

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/rayane-aboud/Rayane%27s%20stuff/PFE/microservices/training_service/mlruns/0/d8acb59401c24eae9c4315d0a318d9e0/artifacts
+end_time: 1716415153718
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: d8acb59401c24eae9c4315d0a318d9e0
+run_name: beautiful-mole-541
+run_uuid: d8acb59401c24eae9c4315d0a318d9e0
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716415150526
+status: 3
+tags: []
+user_id: rayane-aboud
