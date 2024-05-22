@@ -166,6 +166,17 @@ services:
       - influxdb
     networks:
       - smart-metering-network
+    
+  
+  training-service:
+    build:
+      context: ./training-service
+    container_name: training-service
+    ports:
+      - "8001:8001"
+    restart: on-failure
+    networks:
+      - smart-metering-network
 
   device-management-service:
     build: 

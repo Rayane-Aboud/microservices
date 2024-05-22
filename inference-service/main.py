@@ -287,6 +287,7 @@ import shutil
 
 @app.post("/receive-model")
 async def receive_model(silem: UploadFile = File(...)):
+    print("I am here normalement")
     # Check if the file is a PyTorch model file (.pth)
     if not silem.filename.endswith(".pth"):
         return {"error": "Invalid file format. Please upload a PyTorch model file (.pth)"}
