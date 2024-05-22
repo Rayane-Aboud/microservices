@@ -228,7 +228,7 @@ def root(forecast_horizon: int, datatype: str = Query(...), serialnumber: str = 
     
     inferencer = Inference(query_results)
     model = LSTM(1, 4, 2, device='cpu')
-    model.load_state_dict(torch.load("./Prediction_models/trained_model_{datatype}.pth"))
+    model.load_state_dict(torch.load(f"./Prediction_models/trained_model_{datatype}.pth"))
 
     #load the model to the inferencer
     inferencer.load_model(model=model)
