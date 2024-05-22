@@ -478,31 +478,29 @@ model = UniconPytorch(train_test_split_percentage=0.8, batch_size=128)
 async def load_from_mongo_handler(source: str = Query(..., description="Source to filter data from MongoDB")):
     model.load_from_mongo("mongodb+srv://username:too_weak@cluster0.vtie42d.mongodb.net/", "test", "datas", source=source)
     source1=source
-    return {"message": "Data loaded from MongoDB for source: {}".format(source)}
+    
+    model.train_model_horizons()
 
+    predictions, metrics = model.predict(model.forecasting_horizon_values[0])
+    prediction, metric = model.predict(model.forecasting_horizon_values[1])
+    pred, metr = model.predict(model.forecasting_horizon_values[2])
+    model.save_model("./Prediction_models",source=source1)
 
-model.train_model_horizons()
+    import requests 
 
-predictions, metrics = model.predict(model.forecasting_horizon_values[0])
-prediction, metric = model.predict(model.forecasting_horizon_values[1])
-pred, metr = model.predict(model.forecasting_horizon_values[2])
-model.save_model("./model_files",source=source1)
+    url = "http://localhost:8000/inference-service/recieve-model"
 
-import requests 
+    # Define the filepath of the saved model
+    filename = f"trained_model_{source1}.pth"
+    filepath = os.path.join("./model_files", filename)
 
-url = "http://localhost:8000/inference-service/recieve-model"
+    # Open the model file
+    with open(filepath, "rb") as file:
+        # Send a POST request to the specified URL with the model file
+        response = requests.post(url, files={"model_file": file})
 
-# Define the filepath of the saved model
-filename = f"trained_model_{source1}.pth"
-filepath = os.path.join("./model_files", filename)
-
-# Open the model file
-with open(filepath, "rb") as file:
-    # Send a POST request to the specified URL with the model file
-    response = requests.post(url, files={"model_file": file})
-
-# Check the response
-if response.status_code == 200:
-    print("Model sent successfully to inference service.")
-else:
-    print("Failed to send model to inference service.")
+    # Check the response
+    if response.status_code == 200:
+        print("Model sent successfully to inference service.")
+    else:
+        print("Failed to send model to inference service.")
