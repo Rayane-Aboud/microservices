@@ -3,7 +3,7 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 import time
 
 url = 'http://influxdb:8086'
-token = 'your-token'
+token = '4eYvsu8wZCJ6tKuE2sxvFHkvYFwSMVK0011hEEiojvejzpSaij86vYQomN_12au6eK-2MZ6Knr-Sax201y70w=='
 org = 'Namla'
 client = influxdb_client.InfluxDBClient(url=url, token=token, org=org)
 query_api = client.query_api()

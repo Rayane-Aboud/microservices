@@ -25,7 +25,7 @@ def execute_code_block():
     # Optionally log or print response_content here
     schedule.every(24).hours.do(execute_code_block)
 
-    if __name__ == "__main_app__":
+    if __name__ == "__main__":
         while True:
             schedule.run_pending()
             time.sleep(1)
