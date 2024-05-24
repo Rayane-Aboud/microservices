@@ -156,7 +156,7 @@ services:
 
 
   #inference-service:
-  #   build: 
+  #  build: 
   #    context: ./inference-service
   #  container_name: inference-service
   #  ports:
@@ -170,10 +170,10 @@ services:
   
   #training-service:
   #  build:
-  #    context: ./training_service
+  #    context: ./training-service
   #  container_name: training-service
   #  ports:
-  #    - "8002:8002"
+  #    - "8001:8001"
   #  restart: on-failure
   #  networks:
   #    - smart-metering-network
@@ -210,6 +210,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongo-data:/data/db
     networks:
       - smart-metering-network
 
@@ -230,7 +232,7 @@ services:
 volumes:
   influxdb_data:
   grafana_storage:
-  
+  mongo-data:
 
 networks:
   smart-metering-network:

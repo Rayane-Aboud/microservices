@@ -4,6 +4,9 @@ import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { DivIcon, Icon, point } from "leaflet";
+import { useEffect, useState } from "react";
+import { CreateDeviceDto, fetchAllDevices } from "../../api/devicesApi";
+import { Link } from "react-router-dom";
 // import WMTSTileLayer from 'react-leaflet-wmts';
 type Location = {
   coords: [number, number];
@@ -11,24 +14,6 @@ type Location = {
 };
 
 
-const locations:Location[] = [
-  {
-    coords: [46.7633, 23.586267],
-    text: "Point 1"
-  },
-  {
-    coords: [46.770955, 23.589996],
-    text: "Point 2"
-  },
-  {
-    coords: [46.76957, 23.59241],
-    text: "Point 3"
-  },
-  {
-    coords: [46.763369, 23.559224],
-    text: "Point 4"
-  }
-];
 
 const customIcon = new Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/149/149059.png",
@@ -46,6 +31,26 @@ const createClusterCustomIcon = (cluster: any):DivIcon => {
 
 
 export default function Map() {
+
+  const [locations, setLocations] = useState<Location[]>([]);
+  useEffect(() => {
+    const loadDevices = async () => {
+      try {
+        const devices = await fetchAllDevices();
+        const mappedLocations = devices.map((device: CreateDeviceDto) => ({
+          coords: [device.locationX, device.locationY],
+          text: device.serialNumber, // Use serialNumber as the text for the popup
+        }));
+        setLocations(mappedLocations);
+      } catch (error) {
+        console.error("Error loading devices:", error);
+      }
+    };
+
+    loadDevices();
+  }, []);
+
+
   return (
     <MapContainer className="z-10" center={[46.7693, 23.5894]} zoom={5}>
       <TileLayer
@@ -58,7 +63,11 @@ export default function Map() {
       >
         {locations.map((marker) => (
           <Marker position={marker.coords} icon={customIcon}>
-            <Popup> {marker.text} </Popup>
+            <Popup> 
+              <Link to={`/devices/${marker.text}`}>
+                {marker.text} 
+              </Link>
+            </Popup>
           </Marker>
         ))}
       </MarkerClusterGroup>

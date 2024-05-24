@@ -7,7 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
-
+import InfoIcon from '@mui/icons-material/Info';
 import {
   GridRowsProp,
   GridRowModesModel,
@@ -28,6 +28,7 @@ import {
   
 } from '@mui/x-data-grid-generator';
 import { CreateDeviceDto, createOrUpdateDevice, deleteDevice, fetchAllDevices, } from '../../api/devicesApi';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -84,6 +85,7 @@ export default function DevicesDataGrid() {
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
   const [lastChangedId, setLastChangedId] = React.useState<GridRowId | undefined>();
 
+  const navigate = useNavigate();
 
 
   //load all devices from the backend:
@@ -154,9 +156,10 @@ export default function DevicesDataGrid() {
   
       try {
         if (updatedData.id !=="")
+        {
           console.log("Updated data:", updatedData);
-        
           await createOrUpdateDevice(updatedData);
+        }
       } catch (error) {
         console.error("Error updating device:", error);
       }
@@ -187,6 +190,9 @@ export default function DevicesDataGrid() {
     }
   };
 
+  const handleDetailClick = (id:GridRowId) => {
+    navigate(`/devices/${id}`);
+  }
 
   const handleCancelClick = (id: GridRowId) => () => {
     setRowModesModel((rowModesModel)=>({
@@ -264,15 +270,7 @@ export default function DevicesDataGrid() {
       headerAlign: 'left',
       editable: true,
     },
-    {
-      field: 'value',
-      headerName: 'value',
-      width: 220,
-      align: 'left',
-      headerAlign: 'left',
-      editable: true,
-      
-    },
+    
 
     {
       field: 'actions',
@@ -304,6 +302,13 @@ export default function DevicesDataGrid() {
         }
 
         return [
+          <GridActionsCellItem
+            icon={<InfoIcon />}
+            label="Info"
+            onClick={()=>handleDetailClick(id)}
+            color="inherit"
+          />,
+
           <GridActionsCellItem
             icon={<EditIcon />}
             label="Edit"
