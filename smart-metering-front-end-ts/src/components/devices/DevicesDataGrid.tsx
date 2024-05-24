@@ -153,8 +153,10 @@ export default function DevicesDataGrid() {
       };
   
       try {
-        console.log("Updated data:", updatedData);
-        await createOrUpdateDevice(updatedData);
+        if (updatedData.id !=="")
+          console.log("Updated data:", updatedData);
+        
+          await createOrUpdateDevice(updatedData);
       } catch (error) {
         console.error("Error updating device:", error);
       }

@@ -155,28 +155,28 @@ services:
     
 
 
-  inference-service:
-    build: 
-      context: ./inference-service
-    container_name: inference-service
-    ports:
-      - "8000:8000"
-    restart: on-failure
-    depends_on:
-      - influxdb
-    networks:
-      - smart-metering-network
+  #inference-service:
+  #   build: 
+  #    context: ./inference-service
+  #  container_name: inference-service
+  #  ports:
+  #    - "8000:8000"
+  #  restart: on-failure
+  #  depends_on:
+  #    - influxdb
+  #  networks:
+  #    - smart-metering-network
     
   
-  training-service:
-    build:
-      context: ./training_service
-    container_name: training-service
-    ports:
-      - "8002:8002"
-    restart: on-failure
-    networks:
-      - smart-metering-network
+  #training-service:
+  #  build:
+  #    context: ./training_service
+  #  container_name: training-service
+  #  ports:
+  #    - "8002:8002"
+  #  restart: on-failure
+  #  networks:
+  #    - smart-metering-network
 
   device-management-service:
     build: 
@@ -230,6 +230,7 @@ services:
 volumes:
   influxdb_data:
   grafana_storage:
+  
 
 networks:
   smart-metering-network:

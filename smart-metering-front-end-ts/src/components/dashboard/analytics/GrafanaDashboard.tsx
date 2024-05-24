@@ -3,9 +3,9 @@ const GrafanaDashboard = () => {
   return (
     <div className={classes.Dashboard}>
         <iframe
-        src="http://localhost:3000/d/RluH3vESk/all-graphs?orgId=1&from=1716080813791&to=1716081306837&theme=light&viewPanel=2"
+        src="http://localhost:3000/d/tu95axESz/namla?orgId=1&from=1716479404496&to=1716501004496&theme=light&viewPanel=2"
         width="100%"
-        height="600"
+        height="700px"
         title="Grafana Dashboard"
         />
     </div>
