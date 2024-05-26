@@ -1,13 +1,20 @@
+import threading
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 import influxdb_client
 import time
 from influxdb_client.client.write_api import SYNCHRONOUS
+"""
+
+CAUTION : DATATYPE AND DATAUINT ARE REVERSSSSSSSSSED
+
+"""
+
 
 app = FastAPI()
 
 # informations about database
-url='http://influxdb:8086'
+url='http://192.168.208.4:8086'
 token='4eYvsu8wZCJ6tKuE2sxvFHkvYFwSMVK0011hEEiojvejzpSaij86vYQomN_12au6eK-2MZ6Knr-Sax201y70w=='
 org='Namla'
 
@@ -26,7 +33,7 @@ write_api = client.write_api(write_options=SYNCHRONOUS)
 def query_builder(dataType,serialNumber):
     query = '''
         from(bucket: "namla-smart-metering")
-        |> range(start: -1h)
+        |> range(start: -1d)
         |> filter(fn: (r) => r["_measurement"] == "sensor_data")
     '''
     query +=    f'\t|> filter(fn: (r) => r["dataType"] == "{dataType}")\n'
@@ -210,6 +217,84 @@ from fastapi import Query
 
 
 
+from pymongo import MongoClient
+# Function to execute the code block every 24 hours
+#resource, deviceId
+from pydantic import BaseModel
+
+class Device(BaseModel):
+    serialNumber: str
+    dataType: str
+
+def serialize_document(doc):
+    """Convert MongoDB document to a JSON-serializable format with only serialNumber and dataType."""
+    return {
+        "serialNumber": doc.get("serialNumber"),
+        "dataType": doc.get("dataUnit")
+    }
+
+def iot_forcaster():
+    client = MongoClient("mongodb://admin:password@192.168.208.5:27017/")  
+    db = client["test"]
+    collection = db["devices"]
+    # Retrieve all documents from the collection
+    all_documents = collection.find()
+    arr_doc = [serialize_document(doc) for doc in all_documents]
+    # Close the MongoDB connection
+    client.close()
+    return arr_doc
+    
+@app.get('/')
+def forecaster():
+    query_results = []
+    iot_devices=iot_forcaster()
+    for iot_device in iot_devices:
+        #if iot_device["dataType"] != "GAS":
+        print("this is the data type :",iot_device["dataType"])
+        result = query_builder(dataType=iot_device["dataType"], serialNumber=iot_device["serialNumber"])
+        query_results = []
+        
+        result = query_api.query(org=org, query=query_builder(dataType=iot_device["dataType"], serialNumber=iot_device["serialNumber"]))
+        for table in result:
+            for record in table.records:
+                query_results.append((record.get_field(), record.get_value()))
+
+        #print("IAM HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE")
+        response_content = {"query_results": query_results}
+        
+        inferencer = Inference(query_results)
+        model = LSTM(1, 4, 2, device='cpu')
+        model.load_state_dict(torch.load(f"./Prediction_models/trained_model_{iot_device['dataType']}.pth"))
+
+        #load the model to the inferencer
+        inferencer.load_model(model=model)
+        index = 2
+        fh= 672
+                
+            
+        predictions, metrics = inferencer.perform_inference(index, fh)
+        
+        
+        response_content = {
+            "predictions": predictions,
+            "metrics": metrics
+        }
+
+        i = 0
+        for p in response_content["predictions"]:
+            point = influxdb_client.Point('sensor_data') \
+            .tag('serialNumber', iot_device["serialNumber"] + "_pred") \
+            .tag('dateType', 'DATE') \
+            .tag('dataType', iot_device["dataType"]) \
+            .tag('dataUnit', '') \
+            .field('value', float(p[0])) \
+            .time(time.time_ns()+i)  
+            i =i + 3000000000
+            write_api.write(bucket='namla-smart-metering',org='Namla',record=point)
+        
+    
+    return JSONResponse({})
+
 @app.get('/{forecast_horizon}')
 def root(forecast_horizon: int, datatype: str = Query(...), serialnumber: str = Query(...)):
     print(f"Forecast Horizon: {forecast_horizon}, Datatype: {datatype}, Serialnumber: {serialnumber}")
@@ -234,26 +319,16 @@ def root(forecast_horizon: int, datatype: str = Query(...), serialnumber: str = 
     inferencer.load_model(model=model)
     index = None
     fh = None
-    if (datatype=="GAS"):
-        if forecast_horizon  <= 2:
-            index = 0
-            fh=2
-        elif forecast_horizon<=24:
-            index = 1
-            fh=24
-        else:
-            index = 2
-            fh=7*24
+    
+    if forecast_horizon  <= 8:
+        index = 0
+        fh=8
+    elif forecast_horizon<=96:
+        index = 1
+        fh=96
     else:
-        if forecast_horizon  <= 8:
-            index = 0
-            fh=8
-        elif forecast_horizon<=96:
-            index = 1
-            fh=96
-        else:
-            index = 2
-            fh=7*24*4
+        index = 2
+        fh=672
     
     predictions, metrics = inferencer.perform_inference(index, fh)
     
@@ -263,15 +338,17 @@ def root(forecast_horizon: int, datatype: str = Query(...), serialnumber: str = 
         "metrics": metrics
     }
 
-    
+    i = 0
     for p in response_content["predictions"]:
+        
         point = influxdb_client.Point('sensor_data') \
-        .tag('serialNumber', serialnumber + "pred") \
+        .tag('serialNumber', serialnumber + "_pred") \
         .tag('dateType', 'DATE') \
         .tag('dataType', datatype) \
         .tag('dataUnit', 'METER') \
         .field('value', float(p[0])) \
-        .time(time.time_ns()+3600000000000)  
+        .time(time.time_ns()+3000 * i)  
+        i=i+1
         write_api.write(bucket='namla-smart-metering',org='Namla',record=point)
     
     
@@ -309,43 +386,14 @@ async def receive_model(silem: UploadFile = File(...)):
 
 import schedule
 
-# Function to execute the code block every 24 hours
-def execute_code_block():
-    query_results = []
 
-    result = query_api.query(org=org, query=query_builder())
-    for table in result:
-        for record in table.records:
-            query_results.append((record.get_field(), record.get_value()))
-    
-    #query_results = data_array
-    
-    # Convert numpy array to list of lists
-    inferencer = Inference(query_results)
-    model = LSTM(1, 4, 2, device='cpu')
-    model.load_state_dict(torch.load("./Prediction_models/trained_model.pth"))
 
-    #load the model to the inferencer
-    inferencer.load_model(model=model)
 
-    #perform the inference based on the forecasting horizon
-    predictions,metrics= inferencer.perform_inference(0,0)
-    
-    response_content = {
-        "predictions": predictions,
-        "metrics": metrics
-    }
 
-    # You can print or log the response content here if needed
-    
-# Schedule the code execution every 24 hours
-schedule.every(24).hours.do(execute_code_block)
 
-# Run the scheduler loop
-#while True:
-#    schedule.run_pending()
-#    time.sleep(1)
 if __name__ == "__main__":
+   
+
     import uvicorn
 
     # Define the host and port for the FastAPI application to listen on
