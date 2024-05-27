@@ -14,7 +14,7 @@ CAUTION : DATATYPE AND DATAUINT ARE REVERSSSSSSSSSED
 app = FastAPI()
 
 # informations about database
-url='http://192.168.208.4:8086'
+url='http://172.31.0.7:8086'
 token='4eYvsu8wZCJ6tKuE2sxvFHkvYFwSMVK0011hEEiojvejzpSaij86vYQomN_12au6eK-2MZ6Knr-Sax201y70w=='
 org='Namla'
 
@@ -234,7 +234,7 @@ def serialize_document(doc):
     }
 
 def iot_forcaster():
-    client = MongoClient("mongodb://admin:password@192.168.208.5:27017/")  
+    client = MongoClient("mongodb://admin:password@172.31.0.6:27017/")  
     db = client["test"]
     collection = db["devices"]
     # Retrieve all documents from the collection
@@ -347,8 +347,8 @@ def root(forecast_horizon: int, datatype: str = Query(...), serialnumber: str = 
         .tag('dataType', datatype) \
         .tag('dataUnit', 'METER') \
         .field('value', float(p[0])) \
-        .time(time.time_ns()+3000 * i)  
-        i=i+1
+        .time(time.time_ns()+ i)  
+        i =i + 3000000000
         write_api.write(bucket='namla-smart-metering',org='Namla',record=point)
     
     

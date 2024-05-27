@@ -14,7 +14,7 @@ export class DataAquisitionCloudService {
         this.client = new MongoClient(this.uri);
         this.connect();
     }
-
+    
     private async connect() {
         try {
             await this.client.connect();

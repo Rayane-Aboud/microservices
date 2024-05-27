@@ -66,6 +66,8 @@ services:
       KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
     depends_on:
       - zoo1
+    #volumes:
+    #  - kafka_data:/var/lib/kafka/data
 
 
 
@@ -87,7 +89,7 @@ services:
     ports:
       - "8086:8086"
     volumes:
-      - influxdb_data:/var/lib/influxdb
+      - influxdb_data:/var/lib/influxdb2
     environment:
       - DOCKER_INFLUXDB_INIT_MODE=setup
       - DOCKER_INFLUXDB_INIT_HOST=influxdb
@@ -170,7 +172,7 @@ services:
   
   #training-service:
   #  build:
-  #    context: ./training-service
+  #    context: ./training_service
   #  container_name: training-service
   #  ports:
   #    - "8001:8001"
@@ -228,11 +230,22 @@ services:
     networks:
       - smart-metering-network
 
+
+  proxy:
+      build:
+        context: ./proxy
+      container_name: proxy
+      ports:
+        - "53222:53222"  # Expose on port 20019
+      restart: on-failure
+      networks:
+        - smart-metering-network
   
 volumes:
   influxdb_data:
   grafana_storage:
   mongo-data:
+  #kafka_data:
 
 networks:
   smart-metering-network:

@@ -244,23 +244,6 @@ export default function DevicesDataGrid() {
       editable: true,
     },
    
-    {
-      field: 'dateType',
-      headerName: 'Date Type',
-      width: 220,
-      align: 'left',
-      headerAlign: 'left',
-      editable: true,
-    },
-
-    {
-      field: 'dataType',
-      headerName: 'Data Type',
-      width: 220,
-      editable: true,
-      align: 'left',
-      headerAlign: 'left',
-    },
 
     {
       field: 'dataUnit',

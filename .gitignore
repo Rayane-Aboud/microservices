@@ -1,0 +1,17 @@
+# Ignore Python compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Ignore .venv directories
+**/.venv/
+
+
+# Ignore virtual environments
+**/.venv/
+.venv/
+
+# Ignore other common directories
+env/
+venv/

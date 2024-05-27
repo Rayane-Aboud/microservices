@@ -45,7 +45,6 @@ export class RetrieveFromInfluxdbService {
                     location,
                     result[i]['date'],
                     result[i]['dateType'],
-                    result[i]['dataType'],
                     result[i]['dataUnit'],
                     result[i]['_value']
                 );

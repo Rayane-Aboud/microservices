@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InfluxDB, Point, WriteApi } from '@influxdata/influxdb-client';
-import { DataType, DataUnit, DateType, SensorDataDto } from 'src/dto/sensor-data.dto';
+import { DataType, DataUnit, SensorDataDto } from 'src/dto/sensor-data.dto';
 
 @Injectable()
 export class StoreInfluxdbService {
@@ -16,31 +16,38 @@ export class StoreInfluxdbService {
 
     async storeDataInfluxDB(sensorData: SensorDataDto): Promise<void> {
         try {
-            // sensorData
+            // Validate sensorData.value
+            if (sensorData.value === '') {
+                //throw new Error(`Invalid value: ${sensorData.value}`);
+                sensorData.value = '0';
+            }
+
+            // Log the data being inserted
             console.log('Inserting data into InfluxDB:', sensorData);
-            
-            // point
+
+            // Create a point
             const point = new Point('sensor_data')
                 .tag('serialNumber', sensorData.serialNumber.toString())
-                //.tag('location', JSON.stringify(sensorData.location))
                 .timestamp(new Date())
-                .tag('dateType', DateType[sensorData.dateType])
                 .tag('dataType', DataType[sensorData.dataType])
-                .tag('dataUnit', DataUnit[sensorData.dataUnit])                
-                .floatField('value', sensorData.value);
-                
-            //write the api
+                .tag('dataUnit', DataUnit[sensorData.dataUnit])
+                .floatField('value', parseFloat(sensorData.value));
+
+            // Write the point
             this.writeApi.writePoint(point);
             await this.writeApi.flush(true);
             console.log('WRITE FINISHED');
         } catch (error) {
             console.error('Error storing data in InfluxDB:', error);
-            throw error; // Propagate the error if needed
+            // Optionally, rethrow the error if you need to handle it upstream
+            throw error;
         }
     }
+
+}
     
 
   
-}
+
 
 
