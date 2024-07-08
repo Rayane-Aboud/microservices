@@ -5,11 +5,20 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import os
 from pymongo import MongoClient
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Adjust this to your frontend's origin
+    allow_credentials=True,
+    allow_methods=["*"],  # Adjust this to the allowed HTTP methods
+    allow_headers=["*"],  # Adjust this to the allowed headers
+)
 
 # Define environment variables or configure them directly
-INFLUXDB_URL = "http://172.31.0.7:8086"#os.getenv("INFLUXDB_URL")
+INFLUXDB_URL = "http://172.31.0.5:8086"#os.getenv("INFLUXDB_URL")
 INFLUXDB_TOKEN = "4eYvsu8wZCJ6tKuE2sxvFHkvYFwSMVK0011hEEiojvejzpSaij86vYQomN_12au6eK-2MZ6Knr-Sax201y70w==" #os.getenv("INFLUXDB_TOKEN")
 INFLUXDB_ORG = "Namla"#os.getenv("INFLUXDB_ORG")
 INFLUXDB_BUCKET = "namla-smart-metering"#os.getenv("INFLUXDB_BUCKET")
@@ -42,11 +51,12 @@ def serialize_document(doc):
     """Convert MongoDB document to a JSON-serializable format with only serialNumber and dataType."""
     return {
         "serialNumber": doc.get("serialNumber"),
-        "dataType": doc.get("dataUnit")
+        "dataType": doc.get("dataUnit"),
+        "codeSnippet":doc.get("codeSnippet")
     }
 
 def iot_forcaster():
-    client = MongoClient("mongodb://admin:password@172.31.0.6:27017/")  
+    client = MongoClient("mongodb://admin:password@172.31.0.3:27017/")  
     db = client["test"]
     collection = db["devices"]
     # Retrieve all documents from the collection
@@ -72,6 +82,7 @@ result = criterion(deviation_mean)
 async def check_deviation():
 
     iot_devices=iot_forcaster()
+    print(iot_devices)
     for iot_device in iot_devices:
         print("this is the data type :",iot_device["dataType"])
         result = query_builder(dataType=iot_device["dataType"], serialNumber=iot_device["serialNumber"])
@@ -115,7 +126,65 @@ async def check_deviation():
 
 
         return JSONResponse(content={"deviation_mean": deviation_mean, "criterion_result": criterion_result})
-        """
+    
+
+
+@app.get("/{serial_number}")
+async def check_deviation_one(serial_number:str):
+
+    iot_devices=iot_forcaster()
+    def find_device_by_serial_number(devices, target_serial_number):
+        for device in devices:
+            if device['serialNumber'] == target_serial_number:
+                return device
+        return None
+    
+    iot_device = find_device_by_serial_number(iot_devices,serial_number)
+    criterion_code = iot_device["codeSnippet"]
+    print("this is the data type :",iot_device["dataType"])
+    result = query_builder(dataType=iot_device["dataType"], serialNumber=iot_device["serialNumber"])
+    query_real_results = []
+
+    real_result = query_api.query(org=INFLUXDB_ORG, query=query_builder(dataType=iot_device["dataType"], serialNumber=iot_device["serialNumber"]))
+    for table in real_result:
+        for record in table.records:
+            query_real_results.append((record.get_field(), record.get_value()))
+    
+    response_content = {"query_results": query_real_results}
+
+    
+    
+    query_predicted_results = []
+    predicted_result = query_api.query(org=INFLUXDB_ORG, query=query_builder(dataType=iot_device["dataType"], serialNumber=iot_device["serialNumber"]+"_pred"))
+    for table in predicted_result:
+        for record in table.records:
+            query_predicted_results.append((record.get_field(), record.get_value()))
+    
+    #print(query_builder(dataType=iot_device["dataType"], serialNumber=iot_device["serialNumber"]+"_pred"))
+    
+    real_value = [item[1] for item in list(query_real_results)]
+    predicted_value=[item[1] for item in list(query_predicted_results)]
+
+    if predicted_value:
+        mean_predicted = sum(predicted_value) / len(predicted_value)
+    else:
+        mean_predicted = 0
+    
+    while len(predicted_value) < len(real_value):
+        predicted_value.append(mean_predicted)
+
+    print(predicted_value)
+    deviation = [abs(rv - pv) / (pv+0.01) for rv, pv in zip(real_value, predicted_value)]
+    deviation_mean = sum(deviation) / len(deviation)
+
+    local_vars = {'deviation_mean': deviation_mean}
+    exec(criterion_code, {}, local_vars)
+    criterion_result = local_vars['result']
+
+
+    return JSONResponse(content={"deviation_mean": deviation_mean, "criterion_result": criterion_result})
+
+    """
 
 
         real_value = list(query_real_results)[0].records[0].get_value()
@@ -155,3 +224,4 @@ if __name__ == "__main__":
 
     # Start the FastAPI application using Uvicorn ASGI server
     uvicorn.run(app, host=host, port=port)
+    

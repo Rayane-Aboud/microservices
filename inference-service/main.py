@@ -4,6 +4,8 @@ from fastapi.responses import JSONResponse
 import influxdb_client
 import time
 from influxdb_client.client.write_api import SYNCHRONOUS
+from fastapi.middleware.cors import CORSMiddleware
+
 """
 
 CAUTION : DATATYPE AND DATAUINT ARE REVERSSSSSSSSSED
@@ -12,9 +14,16 @@ CAUTION : DATATYPE AND DATAUINT ARE REVERSSSSSSSSSED
 
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Adjust this to your frontend's origin
+    allow_credentials=True,
+    allow_methods=["*"],  # Adjust this to the allowed HTTP methods
+    allow_headers=["*"],  # Adjust this to the allowed headers
+)
 
 # informations about database
-url='http://172.31.0.7:8086'
+url='http://172.31.0.5:8086'
 token='4eYvsu8wZCJ6tKuE2sxvFHkvYFwSMVK0011hEEiojvejzpSaij86vYQomN_12au6eK-2MZ6Knr-Sax201y70w=='
 org='Namla'
 
@@ -234,7 +243,7 @@ def serialize_document(doc):
     }
 
 def iot_forcaster():
-    client = MongoClient("mongodb://admin:password@172.31.0.6:27017/")  
+    client = MongoClient("mongodb://admin:password@172.31.0.3:27017/")  
     db = client["test"]
     collection = db["devices"]
     # Retrieve all documents from the collection

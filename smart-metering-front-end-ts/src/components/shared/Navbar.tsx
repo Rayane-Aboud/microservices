@@ -4,13 +4,12 @@ import classNames from 'classnames';
 
 //import { HiOutlineBellAlert } from 'react-icons/hi2';
 import { Link, } from 'react-router-dom'
-import SearchBar from '../ui/SearchBar';
 
 export default function Navbar(){
     
     return (
         <div className='flex justify-between bg-white h-16 px-4 items-center border-b border-gray-200'>
-            <SearchBar />
+            
             <div className='flex items-center gap-2 mr-2'>
             <div style={{
                 cursor: 'pointer',

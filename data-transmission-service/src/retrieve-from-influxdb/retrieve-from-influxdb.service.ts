@@ -17,10 +17,6 @@ export class RetrieveFromInfluxdbService {
         from(bucket: "namla-smart-metering")
         |> range(start: -5s)
         |> filter(fn: (r) => r["_measurement"] == "sensor_data")
-        |> filter(fn: (r) => r["dataType"] == "GAS")
-        |> filter(fn: (r) => r["serialNumber"] == "1")
-        |> filter(fn: (r) => r["dateType"] == "DATE_TIME")
-        |> group(columns: ["_measurement", "_field", "dataType", "dateType", "serialNumber"])
         |> aggregateWindow(every: 5m, fn: mean, createEmpty: false)
         |> yield(name: "mean")
         `;

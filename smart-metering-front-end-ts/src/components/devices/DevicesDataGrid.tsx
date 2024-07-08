@@ -152,6 +152,10 @@ export default function DevicesDataGrid() {
         dateType: updatedRow.dateType,
         dataType: updatedRow.dataType,
         dataUnit: updatedRow.dataUnit,
+        codeSnippet:`
+  def criterion():
+    pass
+        `
       };
   
       try {

@@ -25,6 +25,9 @@ export class Device{
 
     @Prop({ required: true })
     dataUnit:string;
+
+    @Prop({required:true})
+    codeSnippet:string;
 }
 
 export const DeviceSchema = SchemaFactory.createForClass(Device);

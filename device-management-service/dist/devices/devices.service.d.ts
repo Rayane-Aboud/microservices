@@ -30,4 +30,5 @@ export declare class DevicesService {
     createOrUpdate(serialNumber: string, data: Partial<Device>): Promise<Device>;
     delete(serialNumber: string): Promise<void>;
     fetchAllDevices(): Promise<Device[]>;
+    fetchDeviceById(serialNumber: string): Promise<Device | null>;
 }

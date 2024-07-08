@@ -8,6 +8,7 @@ export interface CreateDeviceDto {
   dateType: string;
   dataType: string;
   dataUnit: string;
+  codeSnippet:string;
 }
 
 export const createOrUpdateDevice = async (device: CreateDeviceDto) => {
@@ -42,3 +43,15 @@ export const fetchAllDevices = async ()=>{
     throw error; 
   }
 }
+
+export const fetchDeviceById = async (id: string):Promise<CreateDeviceDto> => {
+  try {
+      const response = await axiosInstance.get(`/devices/${id}`);
+      const res:CreateDeviceDto= response.data;
+      console.log("res == ",res);
+      return res;
+  } catch (error) {
+      console.error('Error in fetchDeviceById:', error);
+      throw error;
+  }
+};

@@ -33,6 +33,9 @@ let DevicesService = class DevicesService {
     async fetchAllDevices() {
         return await this.deviceModel.find().exec();
     }
+    async fetchDeviceById(serialNumber) {
+        return await this.deviceModel.findOne({ serialNumber });
+    }
 };
 exports.DevicesService = DevicesService;
 exports.DevicesService = DevicesService = __decorate([

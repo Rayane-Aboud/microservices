@@ -1,6 +1,5 @@
 version: '3.8'
 services:
-  
 
   data-transmission-service:
     build:
@@ -176,6 +175,16 @@ services:
   #  container_name: training-service
   #  ports:
   #    - "8001:8001"
+  #  restart: on-failure
+  #  networks:
+  #    - smart-metering-network
+
+  #alert-service:
+  #  build:
+  #    context: ./alert-service
+  #  container_name: alert-service
+  #  ports:
+  #    - "53221:53221"
   #  restart: on-failure
   #  networks:
   #    - smart-metering-network

@@ -10,6 +10,7 @@ export class StoreInfluxdbService {
     constructor(){
         //configure influx
         this.influx = new InfluxDB({ url: 'http://influxdb:8086', token: '4eYvsu8wZCJ6tKuE2sxvFHkvYFwSMVK0011hEEiojvejzpSaij86vYQomN_12au6eK-2MZ6Knr-Sax201y70w=='});/*influx-db*/
+        
         //configure writeApi to write in the specific placement in influx
         this.writeApi = this.influx.getWriteApi('Namla', 'namla-smart-metering', 's');
     }

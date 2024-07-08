@@ -4,9 +4,19 @@ from pymongo import MongoClient
 from typing import List
 import mlflow
 import mlflow.pytorch
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Adjust this to your frontend's origin
+    allow_credentials=True,
+    allow_methods=["*"],  # Adjust this to the allowed HTTP methods
+    allow_headers=["*"],  # Adjust this to the allowed headers
+)
+
 
 import pandas as pd
 from copy import deepcopy as dc
@@ -171,7 +181,7 @@ class UniconPytorch:
             return out
 
     def create_model(self):
-        self.model = self.LSTM(1, 2, 1, device=self.device)
+        self.model = self.LSTM(1, 4, 2, device=self.device)
         self.model.to(self.device)
 
     def train_one_epoch(self, model, loss_function, optimizer, epoch):

@@ -12,7 +12,10 @@ export class DataTransportController {
   @EventPattern('SENSOR_DATA_TOPIC_MQTT')
   publishMqttData(@Payload() data: SensorDataDto, @Ctx() context: MqttContext) {
     this.lastPublishedData = data;
+    
+    
     console.log("collected data from SENSOR_DATA_TOPIC_MQTT : ",data);
+    
     let sensorData:SensorDataDto 
     this.dataTransportService.publishSensorData(data);
   }

@@ -22,8 +22,12 @@ let DeviceController = class DeviceController {
     async fetchAllDevices() {
         return await this.devicesService.fetchAllDevices();
     }
+    async fetchDeviceById(serialNumber) {
+        return await this.devicesService.fetchDeviceById(serialNumber);
+    }
     async createOrUpdate(deviceData) {
         const { serialNumber, ...rest } = deviceData;
+        console.log(deviceData);
         return this.devicesService.createOrUpdate(serialNumber, rest);
     }
     async delete(serialNumber) {
@@ -37,6 +41,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], DeviceController.prototype, "fetchAllDevices", null);
+__decorate([
+    (0, common_1.Get)(':serialNumber'),
+    __param(0, (0, common_1.Param)('serialNumber')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], DeviceController.prototype, "fetchDeviceById", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),

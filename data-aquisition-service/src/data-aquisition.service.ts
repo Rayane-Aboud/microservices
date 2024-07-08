@@ -8,8 +8,8 @@ export class DataAquisitionService {
   //when the data arrives this funciton is called (DIP)
   handleSensorDataPublished(sensorData: SensorDataDto): void {
 
-    console.log(sensorData);
-
+    console.log("Data received from SENSOR_DATA_TOPIC_MQTT : ",sensorData);
+    
     //store the data in influxdb after data arrives 
     this.storeInfluxdbService.storeDataInfluxDB(sensorData);
 

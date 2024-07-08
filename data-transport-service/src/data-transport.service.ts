@@ -11,7 +11,7 @@ export class DataTransportService {
 
   publishSensorData(sensorData:SensorDataDto){
     const sensorDataString = JSON.stringify(sensorData, null, 2);
-    //console.log(sensorDataString);
+    console.log("Data to pubish in SENSOR_DATA_TOPIC_KAFKA",sensorDataString);
     
     this.dataTransportClient.emit(
       'SENSOR_DATA_TOPIC_KAFKA',
