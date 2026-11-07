@@ -15,3 +15,7 @@ __pycache__/
 # Ignore other common directories
 env/
 venv/
+# Dependencies, build output and experiment runs: rebuilt locally, never committed
+node_modules/
+dist/
+training_service/mlruns/
