@@ -1,52 +1,54 @@
 # Edge-to-cloud smart metering
 
-**IoT energy data (gas, water, electricity) collected at the edge, forecast by models trained in the cloud and
-deployed back to the edge.** Built during my end-of-studies internship at Namla, an edge cloud platform.
-The work led to a paper:
+This is the platform I built during my end-of-studies internship at Namla, a company working on edge
+cloud. IoT meters measure gas, water and electricity consumption. The data is collected at the edge,
+forecasting models are trained in the cloud, and the trained models are sent back to run at the edge.
+
+This work led to a paper that I co-authored:
 [Edge AI System for Optimizing Energy Consumption for Smart Buildings](https://www.researchgate.net/publication/392071334_Edge_AI_system_for_optimizing_energy_consumption_for_smart_buildings), MedCCAI 2025.
 
 ![Data pipeline](data%20pipeline.png)
 
-## Data flow
+## How the data flows
 
-1. **Sensors → edge**: meters publish readings over **MQTT** (Mosquitto). The *transport service* bridges them
-   into **Kafka**.
-2. **Edge storage**: the *data acquisition service* consumes the Kafka topic and writes the time series to a local
-   **InfluxDB**, which the dashboard reads directly.
-3. **Edge → cloud**: the *data transmission service* encrypts the data and sends it over **NATS** to the cloud,
-   where the *cloud acquisition service* decrypts and stores it.
-4. **Training (cloud)**: the *training service* compares forecasting models (Prophet and PyTorch recurrent
-   networks) and tracks runs and model versions in **MLflow**.
-5. **Inference (edge)**: the chosen model is deployed to the *inference service*, which forecasts consumption
-   next to the data instead of sending everything to the cloud.
-6. **Operations**: an *alert service* watches the readings, a *device management service* registers meters
-   (MongoDB), and a *proxy* creates a **Grafana** dashboard per device.
+1. The meters publish their readings over MQTT (Mosquitto). The transport service takes them and puts
+   them into Kafka.
+2. The data acquisition service reads from Kafka and stores the time series in a local InfluxDB at the
+   edge. The dashboard reads from there directly.
+3. The data transmission service encrypts the data and sends it to the cloud over NATS. On the cloud
+   side, another service decrypts it and stores it.
+4. In the cloud, the training service compares several forecasting models (Prophet and recurrent
+   networks in PyTorch) and keeps track of the runs and model versions with MLflow.
+5. The best model is deployed to the inference service at the edge, so forecasts are made next to the
+   data instead of sending everything to the cloud.
+6. Around this, there is an alert service that watches the readings, a device management service that
+   keeps the list of meters (MongoDB), and a small proxy that creates a Grafana dashboard for each device.
 
-## Services
+## The services
 
-| Service | Role | Stack |
+| Service | What it does | Built with |
 |---|---|---|
-| `data-transport-service` | MQTT → Kafka bridge | NestJS (TypeScript) |
-| `data-aquisition-service` | Kafka → edge InfluxDB | NestJS |
-| `data-transmission-service` | edge → cloud, encrypted, over NATS | NestJS |
-| `data-aquisition-cloud-service` | receives and decrypts in the cloud | NestJS |
-| `device-management-service` | meter registry | NestJS, MongoDB |
-| `training_service` | model training and comparison | Python, PyTorch, Prophet, MLflow |
-| `inference-service` | forecasts at the edge | Python, FastAPI, PyTorch |
-| `alert-service` | consumption alerts | Python, FastAPI |
-| `proxy` | Grafana dashboard per device | Python, FastAPI |
-| `smart-metering-front-end-ts` | user dashboard | React, TypeScript |
-| `_containers/`, `mqtt/` | Kafka, MQTT, NATS, InfluxDB setups and a sensor data simulator | Docker Compose, shell |
+| `data-transport-service` | moves readings from MQTT to Kafka | NestJS (TypeScript) |
+| `data-aquisition-service` | stores readings from Kafka in the edge InfluxDB | NestJS |
+| `data-transmission-service` | sends encrypted data from the edge to the cloud over NATS | NestJS |
+| `data-aquisition-cloud-service` | receives and decrypts the data in the cloud | NestJS |
+| `device-management-service` | keeps the list of meters | NestJS, MongoDB |
+| `training_service` | trains and compares the models | Python, PyTorch, Prophet, MLflow |
+| `inference-service` | makes forecasts at the edge | Python, FastAPI, PyTorch |
+| `alert-service` | sends consumption alerts | Python, FastAPI |
+| `proxy` | creates a Grafana dashboard per device | Python, FastAPI |
+| `smart-metering-front-end-ts` | the user dashboard | React, TypeScript |
+| `_containers/`, `mqtt/` | setups for Kafka, MQTT, NATS and InfluxDB, and a script that simulates meters | Docker Compose, shell |
 
-## Run it
+## Running it
 
 ```bash
-docker compose up -d                        # brokers, databases, Grafana, MLflow and the services
-./_data-generators/publish_sensor_data.sh   # simulate meters publishing readings
+docker compose up -d                        # starts the brokers, databases, Grafana, MLflow and the services
+./_data-generators/publish_sensor_data.sh   # simulates meters sending readings
 ```
 
 ## Results
 
-Compared with a fully centralised cloud design, the edge-to-cloud architecture cut latency by **68%** and the
-data sent to the cloud by **90%**. The best forecasting model (LSTM) reached an R² of 0.93 to 0.99 depending on
-the meter.
+We compared this edge-to-cloud design with a version where everything runs in the cloud. Latency went
+down by 68%, and the amount of data sent to the cloud went down by 90%. The best forecasting model, an
+LSTM, reached an R² between 0.93 and 0.99 depending on the meter.
